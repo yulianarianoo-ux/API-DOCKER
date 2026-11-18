@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>co.edu.sena.cimm</groupId>
+    <artifactId>distribuidora-delcampo-api</artifactId>
+    <version>1.0.0</version>
+    <packaging>war</packaging>
+
+    <name>distribuidora-delcampo-api</name>
+    <description>Distribuidora del Campo B2B - Java Web Application en Maven (SENA CIMM)</description>
+
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <jakartaee>10.0.0</jakartaee>
+        <tomcat.version>10.1.24</tomcat.version>
+    </properties>
+
+    <dependencies>
+        <!-- Jakarta EE 10 Platform API (Servlet 6.0) idéntico al estándar formativo FitCIMM -->
+        <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <version>${jakartaee}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Google Gson: Manejo rápido de JSON para peticiones y respuestas REST -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.11.0</version>
+        </dependency>
+
+        <!-- Servidor Tomcat Embebido 10.1 (Jakarta EE) para Ejecución Directa con 1 Clic (Run File) -->
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+            <version>${tomcat.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+            <version>${tomcat.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-el</artifactId>
+            <version>${tomcat.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>distribuidora-delcampo-api</finalName>
+        <plugins>
+            <!-- Plugin de Limpieza tolerante a bloqueos de Windows / NetBeans -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.3.2</version>
+                <configuration>
+                    <failOnError>false</failOnError>
+                </configuration>
+            </plugin>
+
+            <!-- Compilador Java 21 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <source>21</source>
+                    <target>21</target>
+                </configuration>
+            </plugin>
+
+            <!-- Empaquetado WAR para reconocimiento de Java Web Application (Mundo en NetBeans) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.4.0</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+
+            <!-- Plugin para ejecución directa con ServidorPrincipal -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <mainClass>co.edu.sena.cimm.distribuidora.ServidorPrincipal</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

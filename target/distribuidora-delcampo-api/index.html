@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌾 AgroCampo • Distribuidora Campesina | Cosechas Directas de Finca</title>
+    <meta name="description" content="Plataforma de comercio directo: Compradores acceden a cosechas frescas con entrega a domicilio, Campesinos registran su stock y precio de venta a la distribuidora, y Administradores gestionan estadísticas, comerciantes y productos.">
+
+    <!-- Fuentes Google: Outfit y JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Estilos de la aplicación -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- ==========================================================================
+         1. BARRA SUPERIOR INSTITUCIONAL Y DE CONFIANZA
+         ========================================================================== -->
+    <div class="top-announcement-bar">
+        <div class="container-top">
+            <div class="top-tag">
+                <span>🌱 <strong>Comercio Justo Directo</strong> • Cosechas de Boyacá, Cundinamarca, Huila y Meta</span>
+            </div>
+            <div class="top-user-indicator" id="top-user-indicator">
+                <!-- Se llena dinámicamente con app.js -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         2. HEADER & NAVEGACIÓN PRINCIPAL DINÁMICA
+         ========================================================================== -->
+    <header class="main-header">
+        <div class="header-container">
+            <!-- LOGO BRAND -->
+            <a href="#" class="brand-badge" onclick="irAInicio(); return false;">
+                <div class="brand-avatar">🌾</div>
+                <div class="brand-info">
+                    <span class="brand-title">AgroCampo</span>
+                    <span class="brand-sub">Distribuidora Campesina B2B</span>
+                </div>
+            </a>
+
+            <!-- MENÚ DE NAVEGACIÓN DINÁMICO POR ROL -->
+            <nav class="main-nav">
+                <ul class="nav-menu" id="nav-menu-list">
+                    <!-- Inyectado por app.js según el rol activo -->
+                </ul>
+            </nav>
+
+            <!-- ACCIONES DEL HEADER (LOGIN / PERFIL / CANASTA) -->
+            <div class="header-actions" id="header-actions-area">
+                <!-- Inyectado por app.js -->
+            </div>
+        </div>
+    </header>
+
+    <!-- NOTIFICACIÓN TOAST FLOTANTE -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- ==========================================================================
+         3. VISTA: INICIO (HOME / LANDING PAGE CON CARRUSEL INTERACTIVO Y COLOR)
+         ========================================================================== -->
+    <main class="view-panel active" id="view-inicio">
+
+        <!-- ======================================================================
+             CARRUSEL PANORÁMICO DE COSECHAS Y REGIONES EN INICIO
+             ====================================================================== -->
+        <section class="home-carousel-section">
+            <div class="carousel-container" id="home-carousel">
+                <div class="carousel-track" id="carousel-track">
+
+                    <!-- SLIDE 1: PAPA CRIOLLA Y TUBÉRCULOS DE BOYACÁ -->
+                    <div class="carousel-slide active" style="background-image: linear-gradient(90deg, rgba(20, 50, 35, 0.92) 0%, rgba(20, 50, 35, 0.6) 55%, rgba(0,0,0,0.25) 100%), url('images/cosecha_papas_campesinas_1793227191923.jpg');">
+                        <div class="carousel-caption">
+                            <span class="carousel-tag tag-boyaca">🥔 BOYACÁ • TUTA &amp; VENTAQUEMADA</span>
+                            <h2 class="carousel-title">Papa Criolla y Pastusa Extra<br><span class="text-gold">Directo del Surco a tu Negocio</span></h2>
+                            <p class="carousel-desc">Bultos de 50kg seleccionados a mano por Don Pedro Morales. Cosechadas al amanecer en tierras fértiles a 2.600 msnm con entrega directa y sin intermediarios abusivos.</p>
+                            <div class="carousel-btns">
+                                <button class="btn-carousel-cta btn-emerald" onclick="filtrarMercadoPorCategoria('Tubérculos')">
+                                    <span>🥔</span> Ver Tubérculos en Catálogo
+                                </button>
+                                <button class="btn-carousel-cta btn-glass" onclick="abrirModalLogin('vendedor')">
+                                    <span>👨‍🌾</span> Soy Productor Campesino
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SLIDE 2: CAFÉ DE ALTURA Y MIEL PURA (HUILA) -->
+                    <div class="carousel-slide" style="background-image: linear-gradient(90deg, rgba(44, 24, 16, 0.92) 0%, rgba(44, 24, 16, 0.6) 55%, rgba(0,0,0,0.25) 100%), url('images/cosecha_panela_miel_1793227271997.jpg');">
+                        <div class="carousel-caption">
+                            <span class="carousel-tag tag-huila">☕ HUILA • PITALITO (1.800 MSNM)</span>
+                            <h2 class="carousel-title">Café Especial Arábica &amp; Miel Cruda<br><span class="text-amber">Sabor y Aroma Auténtico Campesino</span></h2>
+                            <p class="carousel-desc">Variedades Castillo y Caturra tostadas artesanalmente por Don Gonzalo Arango y miel de flor de cafetal. Calidad de exportación disponible para tu restaurante o despensa.</p>
+                            <div class="carousel-btns">
+                                <button class="btn-carousel-cta btn-amber" onclick="filtrarMercadoPorCategoria('Café y Derivados')">
+                                    <span>☕</span> Explorar Café y Miel
+                                </button>
+                                <button class="btn-carousel-cta btn-glass" onclick="abrirModalLogin('comprador')">
+                                    <span>🛒</span> Iniciar Sesión Comprador
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SLIDE 3: FRUTAS TROPICALES Y AGUACATE (META) -->
+                    <div class="carousel-slide" style="background-image: linear-gradient(90deg, rgba(22, 60, 40, 0.92) 0%, rgba(22, 60, 40, 0.6) 55%, rgba(0,0,0,0.25) 100%), url('images/cosecha_aguacates_frutas_1793227221394.jpg');">
+                        <div class="carousel-caption">
+                            <span class="carousel-tag tag-meta">🥑 META • GRANADA &amp; LLANOS ORIENTALES</span>
+                            <h2 class="carousel-title">Aguacate Hass y Plátano Hartón<br><span class="text-lime">Cosechas Tropicales de Máximo Rendimiento</span></h2>
+                            <p class="carousel-desc">Canastillas recolectadas por Doña Carmen y Don Mateo bajo agricultura agroecológica en bosque. Pulpa densa, cremosa y textura ideal para el comercio y el hogar.</p>
+                            <div class="carousel-btns">
+                                <button class="btn-carousel-cta btn-lime" onclick="filtrarMercadoPorCategoria('Plátanos y Frutas')">
+                                    <span>🥑</span> Ver Aguacates y Plátano
+                                </button>
+                                <button class="btn-carousel-cta btn-glass" onclick="irAVista('mercado')">
+                                    <span>🌾</span> Ver Todo el Catálogo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SLIDE 4: LÁCTEOS DE CAMPO Y PANELA ARTESANAL -->
+                    <div class="carousel-slide" style="background-image: linear-gradient(90deg, rgba(67, 20, 7, 0.92) 0%, rgba(67, 20, 7, 0.6) 55%, rgba(0,0,0,0.25) 100%), url('images/cosecha_queso_campesino_1793227308776.jpg');">
+                        <div class="carousel-caption">
+                            <span class="carousel-tag tag-lacteos">🧀 CUNDINAMARCA &amp; BOYACÁ</span>
+                            <h2 class="carousel-title">Queso Campesino &amp; Panela de Trapiche<br><span class="text-orange">Tradición Viva Elaborada a Mano</span></h2>
+                            <p class="carousel-desc">Queso blanco semigraso fresco pasteurizado y panela 100% pura de caña sin clarificantes químicos. El verdadero sabor del campo colombiano directo a tu mesa.</p>
+                            <div class="carousel-btns">
+                                <button class="btn-carousel-cta btn-orange" onclick="filtrarMercadoPorCategoria('Lácteos')">
+                                    <span>🧀</span> Comprar Lácteos y Panela
+                                </button>
+                                <button class="btn-carousel-cta btn-glass" onclick="abrirCanasta()">
+                                    <span>🧺</span> Mi Canasta Campesina
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- FLECHAS DE NAVEGACIÓN -->
+                <button class="carousel-arrow prev" onclick="moverSlideManual(-1)" aria-label="Cosecha Anterior">‹</button>
+                <button class="carousel-arrow next" onclick="moverSlideManual(1)" aria-label="Siguiente Cosecha">›</button>
+
+                <!-- BARRA DE PROGRESO DE AUTO-ROTACIÓN -->
+                <div class="carousel-progress-track">
+                    <div class="carousel-progress-bar" id="carousel-progress-bar"></div>
+                </div>
+
+                <!-- INDICADORES / PUNTOS INFERIORES -->
+                <div class="carousel-indicators" id="carousel-indicators">
+                    <button class="indicator-dot active" onclick="saltarASlide(0)" aria-label="Slide 1"></button>
+                    <button class="indicator-dot" onclick="saltarASlide(1)" aria-label="Slide 2"></button>
+                    <button class="indicator-dot" onclick="saltarASlide(2)" aria-label="Slide 3"></button>
+                    <button class="indicator-dot" onclick="saltarASlide(3)" aria-label="Slide 4"></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- INTRODUCCIÓN INSTITUCIONAL SENA CIMM Y ROLES -->
+        <section class="section-container pt-sm">
+            <div class="hero-clean-inner">
+                <div class="hero-pill-sena">
+                    <span>🇨🇴</span> PLATAFORMA DE COMERCIO DIRECTO Y COMERCIO JUSTO • SENA CIMM
+                </div>
+                <h2 class="section-h2-title">
+                    Elige tu Perfil para Acceder a la Distribuidora
+                </h2>
+                <p class="hero-subtitle">
+                    Los campesinos registran su producción y fijan precios justos, los compradores adquieren cosechas frescas a domicilio y la distribuidora central supervisa la logística.
+                </p>
+
+                <!-- CARDS DE LOS 3 ROLES DEL SISTEMA -->
+                <div class="roles-showcase-grid">
+                    <!-- CARD ROL 1: COMPRADOR -->
+                    <div class="role-entry-card" onclick="irAVista('mercado')">
+                        <div class="role-icon-box comprador">🛒</div>
+                        <h3>Panel Comprador</h3>
+                        <p>Catálogo de cosechas frescas al por mayor o al detal, canasta de compras y entrega a tu dirección registrada.</p>
+                        <span class="role-card-link">Entrar a Comprar →</span>
+                    </div>
+
+                    <!-- CARD ROL 2: CAMPESINO VENDEDOR -->
+                    <div class="role-entry-card" onclick="abrirModalLogin('vendedor')">
+                        <div class="role-icon-box campesino">👨‍🌾</div>
+                        <h3>Panel Comerciante Campesino</h3>
+                        <p>Registra cuánto stock cosechaste, define a qué precio vendes a la distribuidora y supervisa tus cosechas activas.</p>
+                        <span class="role-card-link">Registrar mi Cosecha →</span>
+                    </div>
+
+                    <!-- CARD ROL 3: ADMINISTRADOR -->
+                    <div class="role-entry-card" onclick="abrirModalLogin('admin')">
+                        <div class="role-icon-box admin">👑</div>
+                        <h3>Panel Administrador Central</h3>
+                        <p>Supervisa estadísticas de ventas, autoriza comerciantes campesinos, gestiona el inventario y controla los despachos.</p>
+                        <span class="role-card-link">Gestionar Distribuidora →</span>
+                    </div>
+                </div>
+
+                <!-- KPI STATS BAR -->
+                <div class="stats-counter-strip">
+                    <div class="counter-box">
+                        <span class="counter-num" id="stat-campesinos-home">36,800+</span>
+                        <span class="counter-label">Campesinos Vinculados</span>
+                    </div>
+                    <div class="counter-box">
+                        <span class="counter-num" id="stat-cosechas-home">12</span>
+                        <span class="counter-label">Cosechas Disponibles Hoy</span>
+                    </div>
+                    <div class="counter-box">
+                        <span class="counter-num">0%</span>
+                        <span class="counter-label">Intermediarios Abusivos</span>
+                    </div>
+                    <div class="counter-box">
+                        <span class="counter-num">100%</span>
+                        <span class="counter-label">Comercio Justo Campesino</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN: COSECHAS DESTACADAS DEL DÍA -->
+        <section class="section-container">
+            <div class="section-title-wrapper">
+                <div class="title-badge">Cosechas del Día</div>
+                <h2>Productos Agrícolas Frescos Listos para Despacho</h2>
+                <p>Cosechados al amanecer por familias productoras de nuestras regiones asociadas.</p>
+            </div>
+
+            <!-- GRID PREVIEW PRODUCTOS -->
+            <div class="products-grid-modern" id="home-featured-products-grid">
+                <!-- Se llena con app.js -->
+            </div>
+
+            <div class="section-footer-cta">
+                <button class="btn-ver-todo" onclick="irAVista('mercado')">
+                    Ver Todo el Catálogo y Filtrar por Región →
+                </button>
+            </div>
+        </section>
+
+        <!-- SECCIÓN: SERVICIOS DE LA DISTRIBUIDORA -->
+        <section class="section-container bg-warm-light">
+            <div class="section-title-wrapper">
+                <div class="title-badge">Logística y Respaldo</div>
+                <h2>Servicios que Presta la Distribuidora</h2>
+                <p>Garantizamos calidad para el comprador y rentabilidad justa para el productor rural.</p>
+            </div>
+
+            <div class="services-clean-grid">
+                <div class="service-clean-card">
+                    <div class="service-num">01</div>
+                    <div class="service-icon">🚚</div>
+                    <h3>Recolección en Finca</h3>
+                    <p>Camiones propios recogen las cosechas directamente en la vereda de cada familia campesina sin costo de flete abusivo.</p>
+                </div>
+                <div class="service-clean-card">
+                    <div class="service-num">02</div>
+                    <div class="service-icon">⚖️</div>
+                    <h3>Pesaje Justo y Calidad</h3>
+                    <p>Básculas certificadas y selección técnica para asegurar el mejor estándar sin descartes injustificados.</p>
+                </div>
+                <div class="service-clean-card">
+                    <div class="service-num">03</div>
+                    <div class="service-icon">📍</div>
+                    <h3>Entrega a tu Dirección</h3>
+                    <p>Despachos directos a supermercados, restaurantes y hogares con trazabilidad y registro de dirección.</p>
+                </div>
+                <div class="service-clean-card">
+                    <div class="service-num">04</div>
+                    <div class="service-icon">🤝</div>
+                    <h3>Liquidación Transparente</h3>
+                    <p>Pago oportuno y directo al productor al precio pactado, respetando la mano de obra del campo.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN: QUIÉNES VENDEN -->
+        <section class="section-container">
+            <div class="section-title-wrapper">
+                <div class="title-badge">Nuestros Productores</div>
+                <h2>Familias Campesinas que Hacen Posible el Alimento</h2>
+                <p>Conoce los rostros, fincas y regiones donde nacen las cosechas que llegan a tu mesa.</p>
+            </div>
+
+            <div class="farmers-clean-grid" id="home-farmers-grid">
+                <!-- Se llena con app.js -->
+            </div>
+        </section>
+    </main>
+
+    <!-- ==========================================================================
+         4. VISTA: CATÁLOGO DE COMPRAS (COMPRADOR)
+         ========================================================================== -->
+    <section class="view-panel" id="view-mercado">
+        <div class="panel-header-banner">
+            <div class="panel-header-content">
+                <span class="badge-role-tag">🛒 CATÁLOGO DE COSECHAS MAYORISTAS Y AL DETAL</span>
+                <h2>Mercado del Campo Fresco</h2>
+                <p>Precios justos, disponibilidad en tiempo real y pedido directo con entrega a domicilio.</p>
+            </div>
+            <div class="panel-header-right">
+                <button class="btn-primary-action" onclick="abrirCanasta()">
+                    <span>🧺 Ver Canasta</span>
+                    <span class="badge-pill-count" id="btn-count-canasta-banner">0</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="container-panel">
+            <!-- BARRA DE BÚSQUEDA Y FILTROS -->
+            <div class="filter-bar-clean">
+                <div class="search-box-clean">
+                    <span class="search-ico">🔍</span>
+                    <input type="text" id="input-buscar-mercado" placeholder="Buscar por producto (papa, café, queso...), campesino o municipio...">
+                </div>
+
+                <div class="category-scroll-pills">
+                    <button class="pill-category active" data-categoria="Todas">🌾 Todas</button>
+                    <button class="pill-category" data-categoria="Tubérculos">🥔 Tubérculos</button>
+                    <button class="pill-category" data-categoria="Frutas y Verduras">🍅 Frutas y Verduras</button>
+                    <button class="pill-category" data-categoria="Café y Derivados">☕ Café y Miel</button>
+                    <button class="pill-category" data-categoria="Lácteos">🧀 Lácteos</button>
+                    <button class="pill-category" data-categoria="Panela y Endulzantes">🍯 Panela</button>
+                    <button class="pill-category" data-categoria="Plátanos y Frutas">🥑 Plátanos / Frutas</button>
+                </div>
+            </div>
+
+            <!-- GRID PRINCIPAL DE PRODUCTOS -->
+            <div class="products-grid-modern" id="catalog-products-grid">
+                <!-- Se inyectan las tarjetas de productos -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         5. VISTA: DIRECCIÓN DE ENTREGA (COMPRADOR)
+         ========================================================================== -->
+    <section class="view-panel" id="view-direccion">
+        <div class="panel-header-banner">
+            <div class="panel-header-content">
+                <span class="badge-role-tag">📍 SERVICIO AL CLIENTE Y DESPACHO</span>
+                <h2>Mi Dirección de Entrega a Domicilio</h2>
+                <p>Registra dónde debe llegar el camión de la distribuidora para entregarte tus cosechas frescas.</p>
+            </div>
+        </div>
+
+        <div class="container-panel max-w-850">
+            <div class="clean-form-card">
+                <div class="form-card-header">
+                    <div class="header-icon">🚚</div>
+                    <div>
+                        <h3>Datos para el Despacho</h3>
+                        <p>Tu pedido se preparará y enviará directamente a estos datos de entrega.</p>
+                    </div>
+                </div>
+
+                <form id="form-direccion-entrega" onsubmit="guardarDireccionEntrega(event)">
+                    <div class="form-grid-2">
+                        <div class="form-field">
+                            <label>Nombre de quien Recibe:</label>
+                            <input type="text" id="dir-nombre" placeholder="Ej. Fernando Arciniegas" required>
+                        </div>
+                        <div class="form-field">
+                            <label>Teléfono / Celular de Contacto:</label>
+                            <input type="tel" id="dir-telefono" placeholder="Ej. 310 987 6543" required>
+                        </div>
+                    </div>
+
+                    <div class="form-grid-2">
+                        <div class="form-field">
+                            <label>Ciudad o Municipio:</label>
+                            <input type="text" id="dir-ciudad" placeholder="Ej. Bogotá D.C. / Tunja / Sogamoso" required>
+                        </div>
+                        <div class="form-field">
+                            <label>Barrio / Sector:</label>
+                            <input type="text" id="dir-barrio" placeholder="Ej. El Salitre / Chapinero / Centro" required>
+                        </div>
+                    </div>
+
+                    <div class="form-field">
+                        <label>Dirección Exacta (Calle, Carrera, Número, Edificio, Apto):</label>
+                        <input type="text" id="dir-direccion" placeholder="Ej. Calle 26 # 68-35 Torre 2 Apto 402" required>
+                    </div>
+
+                    <div class="form-field">
+                        <label>Instrucciones de Entrega (Opcional):</label>
+                        <textarea id="dir-indicaciones" rows="2" placeholder="Ej. Dejar en recepción, timbre 402, recibir en el local comercial..."></textarea>
+                    </div>
+
+                    <div class="form-actions-right">
+                        <button type="submit" class="btn-save-action">
+                            <span>💾</span> Guardar Dirección de Entrega
+                        </button>
+                    </div>
+                </form>
+
+                <!-- PREVIEW DE LA DIRECCIÓN GUARDADA -->
+                <div class="saved-address-preview" id="saved-address-box">
+                    <span class="preview-badge">📍 Dirección Registrada</span>
+                    <h4 id="preview-dir-titulo">Sin dirección guardada aún</h4>
+                    <p id="preview-dir-detalle">Diligencia el formulario para vincular la entrega a tus pedidos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         6. VISTA: PANEL COMERCIANTE CAMPESINO (PRODUCTOR)
+         ========================================================================== -->
+    <section class="view-panel" id="view-comerciante-panel">
+        <div class="panel-header-banner bg-campesino">
+            <div class="panel-header-content">
+                <span class="badge-role-tag campesino">👨‍🌾 PANEL DE PRODUCTOR RURAL</span>
+                <h2 id="comerciante-banner-nombre">Bienvenido, Productor Campesino</h2>
+                <p id="comerciante-banner-finca">Registra el stock de tus cosechas y el precio de venta acordado con la Distribuidora AgroCampo.</p>
+            </div>
+            <div class="panel-header-right">
+                <div class="campesino-quick-chip" id="comerciante-quick-stats">
+                    <!-- Stats rápidas del campesino -->
+                </div>
+            </div>
+        </div>
+
+        <div class="container-panel">
+            <!-- PESTAÑAS DEL PANEL CAMPESINO -->
+            <div class="panel-subtabs">
+                <button class="subtab-btn active" id="subtab-btn-registrar" onclick="cambiarSubtabCampesino('registrar')">
+                    <span>🌱</span> Registrar Nueva Cosecha y Stock
+                </button>
+                <button class="subtab-btn" id="subtab-btn-mis-cosechas" onclick="cambiarSubtabCampesino('mis-cosechas')">
+                    <span>📦</span> Mis Cosechas Registradas (<span id="count-mis-cosechas">0</span>)
+                </button>
+            </div>
+
+            <!-- SUBPANEL 1: FORMULARIO DE REGISTRO DE COSECHA -->
+            <div class="subpanel-container active" id="subpanel-campesino-registrar">
+                <div class="clean-form-card">
+                    <div class="form-card-header">
+                        <div class="header-icon campesino">🌾</div>
+                        <div>
+                            <h3>Registrar Stock y Precio de Venta a la Distribuidora</h3>
+                            <p>Indica la cantidad disponible en tu finca y el valor que te pagará la distribuidora por cada unidad.</p>
+                        </div>
+                    </div>
+
+                    <form id="form-comerciante-producto" onsubmit="guardarProductoCampesino(event)">
+                        <div class="form-grid-2">
+                            <div class="form-field">
+                                <label>Nombre de la Cosecha / Producto:</label>
+                                <input type="text" id="camp-prod-nombre" placeholder="Ej. Papa Criolla Dorada Especial" required>
+                            </div>
+                            <div class="form-field">
+                                <label>Categoría Agrícola:</label>
+                                <select id="camp-prod-categoria" required>
+                                    <option value="Tubérculos">🥔 Tubérculos y Papas</option>
+                                    <option value="Frutas y Verduras">🍅 Frutas y Verduras</option>
+                                    <option value="Café y Derivados">☕ Café y Miel</option>
+                                    <option value="Lácteos">🧀 Lácteos Frescos</option>
+                                    <option value="Panela y Endulzantes">🍯 Panela y Molienda</option>
+                                    <option value="Plátanos y Frutas">🥑 Plátanos / Frutas</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-grid-3">
+                            <div class="form-field">
+                                <label>Stock Disponible:</label>
+                                <input type="number" id="camp-prod-stock" min="1" max="10000" placeholder="Ej. 100" oninput="calcularTotalLoteCampesino()" required>
+                            </div>
+                            <div class="form-field">
+                                <label>Unidad de Medida / Presentación:</label>
+                                <input type="text" id="camp-prod-unidad" placeholder="Ej. Bulto 50kg, Canastilla 22kg, Kilo" required>
+                            </div>
+                            <div class="form-field">
+                                <label>Precio de Venta a Distribuidora ($ COP):</label>
+                                <input type="number" id="camp-prod-precio" min="100" step="500" placeholder="Ej. 75000" oninput="calcularTotalLoteCampesino()" required>
+                            </div>
+                        </div>
+
+                        <!-- CÁLCULO DEL VALOR ESTIMADO DEL LOTE -->
+                        <div class="lot-value-highlight">
+                            <span>💰 <strong>Valor Total Estimado del Lote a Liquidar:</strong></span>
+                            <span class="lot-total-price" id="camp-lote-total">$0 COP</span>
+                        </div>
+
+                        <div class="form-grid-2">
+                            <div class="form-field">
+                                <label>Fecha o Estado de la Cosecha:</label>
+                                <input type="text" id="camp-prod-fecha" placeholder="Ej. Cosecha Fresca de Hoy / Lote Semanal" required>
+                            </div>
+                            <div class="form-field">
+                                <label>Método de Cultivo:</label>
+                                <input type="text" id="camp-prod-metodo" placeholder="Ej. Agroecológico sin Químicos / Tradicional de Altura">
+                            </div>
+                        </div>
+
+                        <div class="form-field">
+                            <label>Descripción de Calidad del Producto:</label>
+                            <textarea id="camp-prod-desc" rows="2" placeholder="Describe el tamaño, textura, variedad y condiciones de recolección..." required></textarea>
+                        </div>
+
+                        <div class="form-actions-right">
+                            <button type="submit" class="btn-save-action campesino">
+                                <span>🌱</span> Registrar y Publicar Cosecha
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- SUBPANEL 2: LISTADO DE MIS COSECHAS -->
+            <div class="subpanel-container" id="subpanel-campesino-mis-cosechas">
+                <div class="clean-table-card">
+                    <div class="table-card-header">
+                        <h3>Cosechas que Tienes Vinculadas en AgroCampo</h3>
+                        <p>Stock disponible y precios pactados con la distribuidora.</p>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="clean-table">
+                            <thead>
+                                <tr>
+                                    <th>Cosecha</th>
+                                    <th>Categoría</th>
+                                    <th>Presentación</th>
+                                    <th>Stock Actual</th>
+                                    <th>Precio Pactado</th>
+                                    <th>Valor Total Lote</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-mis-cosechas-campesino">
+                                <!-- Inyectado con app.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         7. VISTA: PANEL ADMINISTRADOR CENTRAL
+         ========================================================================== -->
+    <section class="view-panel" id="view-admin-panel">
+        <div class="panel-header-banner bg-admin">
+            <div class="panel-header-content">
+                <span class="badge-role-tag admin">👑 ADMINISTRACIÓN CENTRAL • SENA CIMM</span>
+                <h2>Panel de Control y Operaciones B2B</h2>
+                <p>Supervisa estadísticas de ventas, autoriza comerciantes campesinos, gestiona el inventario y controla los despachos.</p>
+            </div>
+        </div>
+
+        <div class="container-panel">
+            <!-- 4 METRICAS CLAVE KPI -->
+            <div class="kpi-grid-4">
+                <div class="kpi-card">
+                    <div class="kpi-icon">👨‍🌾</div>
+                    <div class="kpi-info">
+                        <span class="kpi-title">Comerciantes Campesinos</span>
+                        <h3 class="kpi-value" id="admin-kpi-campesinos">0</h3>
+                        <span class="kpi-sub">Productores vinculados</span>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon">🌾</div>
+                    <div class="kpi-info">
+                        <span class="kpi-title">Cosechas Activas</span>
+                        <h3 class="kpi-value" id="admin-kpi-productos">0</h3>
+                        <span class="kpi-sub">En catálogo para venta</span>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon">📦</div>
+                    <div class="kpi-info">
+                        <span class="kpi-title">Stock en Bodega</span>
+                        <h3 class="kpi-value" id="admin-kpi-stock">0</h3>
+                        <span class="kpi-sub">Bultos / canastillas totales</span>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon">🚚</div>
+                    <div class="kpi-info">
+                        <span class="kpi-title">Despachos / Pedidos</span>
+                        <h3 class="kpi-value" id="admin-kpi-pedidos">0</h3>
+                        <span class="kpi-sub">Órdenes registradas</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PESTAÑAS ADMIN -->
+            <div class="panel-subtabs">
+                <button class="subtab-btn active" id="admin-tab-btn-comerciantes" onclick="cambiarSubtabAdmin('comerciantes')">
+                    <span>👨‍🌾</span> Comerciantes Campesinos
+                </button>
+                <button class="subtab-btn" id="admin-tab-btn-productos" onclick="cambiarSubtabAdmin('productos')">
+                    <span>🛒</span> Catálogo de Productos y Precios
+                </button>
+                <button class="subtab-btn" id="admin-tab-btn-pedidos" onclick="cambiarSubtabAdmin('pedidos')">
+                    <span>🚚</span> Despachos y Pedidos a Domicilio
+                </button>
+            </div>
+
+            <!-- TAB 1: COMERCIANTES CAMPESINOS -->
+            <div class="subpanel-container active" id="subpanel-admin-comerciantes">
+                <div class="clean-table-card">
+                    <div class="table-card-header">
+                        <h3>Directorio de Familias Productoras</h3>
+                        <p>Campesinos autorizados para abastecer la distribuidora con entrega en centro de acopio.</p>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="clean-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre del Productor</th>
+                                    <th>Finca y Vereda</th>
+                                    <th>Región</th>
+                                    <th>Especialidad</th>
+                                    <th>Contacto</th>
+                                    <th>Calificación</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-admin-campesinos">
+                                <!-- Inyectado con app.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: PRODUCTOS Y PRECIOS -->
+            <div class="subpanel-container" id="subpanel-admin-productos">
+                <div class="clean-table-card">
+                    <div class="table-card-header">
+                        <h3>Inventario General de Cosechas</h3>
+                        <p>Monitoreo de precios de venta mayorista y stock disponible en bodega.</p>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="clean-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Producto</th>
+                                    <th>Categoría</th>
+                                    <th>Campesino Productor</th>
+                                    <th>Stock</th>
+                                    <th>Precio Mayorista</th>
+                                    <th>Presentación</th>
+                                    <th>Disponibilidad</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-admin-productos">
+                                <!-- Inyectado con app.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: PEDIDOS Y DESPACHOS -->
+            <div class="subpanel-container" id="subpanel-admin-pedidos">
+                <div class="clean-table-card">
+                    <div class="table-card-header">
+                        <h3>Pedidos Mayoristas y Entregas a Domicilio</h3>
+                        <p>Órdenes generadas por compradores con su dirección registrada.</p>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="clean-table">
+                            <thead>
+                                <tr>
+                                    <th>N° Pedido</th>
+                                    <th>Comprador</th>
+                                    <th>Empresa / Hogar</th>
+                                    <th>Ciudad / Destino</th>
+                                    <th>Dirección de Entrega</th>
+                                    <th>Total ($)</th>
+                                    <th>Estado Despacho</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-admin-pedidos">
+                                <!-- Inyectado con app.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         8. MODAL DEDICADO DE INICIO DE SESIÓN / ACCESO POR ROL
+         ========================================================================== -->
+    <div class="modal-backdrop" id="modal-login-backdrop" onclick="cerrarModalLogin(event)">
+        <div class="modal-clean-box modal-role-picker" onclick="event.stopPropagation()">
+            <button class="modal-close-btn" onclick="cerrarModalLogin()" title="Cerrar">×</button>
+
+            <div class="login-modal-header">
+                <div class="login-brand-logo">🌾</div>
+                <h3>Acceso al Sistema AgroCampo</h3>
+                <p>Elige tu perfil para ingresar directamente a tu panel:</p>
+            </div>
+
+            <!-- GRID PRINCIPAL DE LOS 3 ROLES DEL SISTEMA -->
+            <div class="login-role-selection-grid">
+
+                <!-- 1. ADMINISTRADOR CENTRAL -->
+                <div class="login-role-card admin-card">
+                    <div class="role-badge-top admin">👑 CONTROL CENTRAL</div>
+                    <div class="role-card-inner">
+                        <div class="role-avatar-circle admin">👑</div>
+                        <h4>Administrador</h4>
+                        <p>Supervisa estadísticas B2B, aprueba comerciantes campesinos, monitorea inventario y controla pedidos.</p>
+                        <div class="role-demo-chip">admin@delcampo.co • SENA CIMM</div>
+                        <button type="button" class="btn-role-action btn-admin-action" onclick="loginDirectoRol('ADMIN')">
+                            <span>👑</span> Entrar como Administrador
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 2. COMERCIANTE CAMPESINO -->
+                <div class="login-role-card campesino-card">
+                    <div class="role-badge-top campesino">👨‍🌾 PRODUCTOR RURAL</div>
+                    <div class="role-card-inner">
+                        <div class="role-avatar-circle campesino">👨‍🌾</div>
+                        <h4>Comerciante Campesino</h4>
+                        <p>Publica cosechas frescas, registra cuánto stock tienes en finca y a qué precio vendes a la distribuidora.</p>
+                        <div class="role-demo-chip">Don Pedro Morales • Tuta, Boyacá</div>
+                        <button type="button" class="btn-role-action btn-campesino-action" onclick="loginDirectoRol('CAMPESINO')">
+                            <span>🌱</span> Entrar como Campesino
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 3. COMPRADOR -->
+                <div class="login-role-card comprador-card">
+                    <div class="role-badge-top comprador">🛒 COMPRAS &amp; HOGAR</div>
+                    <div class="role-card-inner">
+                        <div class="role-avatar-circle comprador">🛒</div>
+                        <h4>Comprador</h4>
+                        <p>Explora el catálogo de cosechas al por mayor o al detal, arma tu canasta y recibe con entrega a domicilio.</p>
+                        <div class="role-demo-chip">Don Fernando • Supermercado La Canasta</div>
+                        <button type="button" class="btn-role-action btn-comprador-action" onclick="loginDirectoRol('COMPRADOR')">
+                            <span>🧺</span> Entrar como Comprador
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ÁREA PLEGABLE PARA INGRESO MANUAL O REGISTRO -->
+            <div class="login-manual-toggle-area">
+                <button type="button" class="btn-toggle-manual" onclick="alternarFormularioManual()">
+                    <span id="txt-toggle-manual">⚙️ O ingresar con correo y contraseña manual / Crear cuenta ▼</span>
+                </button>
+
+                <div id="login-manual-accordion" style="display: none; margin-top: 1.25rem;">
+                    <!-- SELECTOR DE ROL MANUAL CON TABS -->
+                    <div class="login-tabs-bar">
+                        <button class="tab-login-btn active" id="tab-login-comprador" onclick="seleccionarTabModalLogin('comprador')">
+                            <span>🛒</span> Comprador
+                        </button>
+                        <button class="tab-login-btn" id="tab-login-vendedor" onclick="seleccionarTabModalLogin('vendedor')">
+                            <span>👨‍🌾</span> Campesino
+                        </button>
+                        <button class="tab-login-btn" id="tab-login-admin" onclick="seleccionarTabModalLogin('admin')">
+                            <span>👑</span> Administrador
+                        </button>
+                        <button class="tab-login-btn" id="tab-login-registro" onclick="seleccionarTabModalLogin('registro')">
+                            <span>🌱</span> Nuevo Registro
+                        </button>
+                    </div>
+
+                    <!-- FORMULARIO LOGIN MANUAL -->
+                    <div id="modal-section-login-form">
+                        <form id="form-modal-login" onsubmit="ejecutarLogin(event)">
+                            <div class="form-field">
+                                <label>Correo Electrónico:</label>
+                                <input type="email" id="modal-login-email" placeholder="correo@ejemplo.com" required>
+                            </div>
+                            <div class="form-field">
+                                <label>Contraseña:</label>
+                                <input type="password" id="modal-login-password" placeholder="••••••••" required>
+                            </div>
+                            <button type="submit" class="btn-submit-login" id="btn-submit-modal-login">
+                                <span>🔑</span> Iniciar Sesión con Credenciales
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- FORMULARIO REGISTRO (EXCLUSIVO COMPRADORES) -->
+                    <div id="modal-section-registro-form" style="display: none;">
+                        <form id="form-modal-registro" onsubmit="ejecutarRegistroComprador(event)">
+                            <div class="form-grid-2">
+                                <div class="form-field">
+                                    <label>Nombre Completo:</label>
+                                    <input type="text" id="reg-nombre" placeholder="Ej. Carlos Mendoza" required>
+                                </div>
+                                <div class="form-field">
+                                    <label>Hogar, Tienda o Negocio:</label>
+                                    <input type="text" id="reg-empresa" placeholder="Ej. Restaurante El Roble / Hogar" required>
+                                </div>
+                            </div>
+                            <div class="form-grid-2">
+                                <div class="form-field">
+                                    <label>Correo Electrónico:</label>
+                                    <input type="email" id="reg-email" placeholder="carlos@correo.com" required>
+                                </div>
+                                <div class="form-field">
+                                    <label>Contraseña:</label>
+                                    <input type="password" id="reg-password" minlength="3" placeholder="Mínimo 3 caracteres" required>
+                                </div>
+                            </div>
+                            <div class="form-grid-2">
+                                <div class="form-field">
+                                    <label>Teléfono Celular:</label>
+                                    <input type="tel" id="reg-telefono" placeholder="Ej. 310 123 4567" required>
+                                </div>
+                                <div class="form-field">
+                                    <label>Ciudad de Despacho:</label>
+                                    <input type="text" id="reg-ciudad" placeholder="Ej. Tunja, Boyacá" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-submit-login">
+                                <span>🌱</span> Crear Cuenta de Comprador
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         9. DRAWER / MODAL DE CANASTA CAMPESINA (COMPRADOR)
+         ========================================================================== -->
+    <div class="cart-drawer-backdrop" id="cart-drawer-backdrop" onclick="cerrarCanasta(event)">
+        <div class="cart-drawer-panel" onclick="event.stopPropagation()">
+            <div class="cart-drawer-header">
+                <div class="header-cart-title">
+                    <span>🧺</span>
+                    <h3>Mi Canasta Campesina</h3>
+                </div>
+                <button class="cart-drawer-close" onclick="cerrarCanasta()">×</button>
+            </div>
+
+            <!-- LISTADO DE ITEMS -->
+            <div class="cart-items-scroll" id="cart-items-container">
+                <!-- Se inyectan items de la canasta -->
+            </div>
+
+            <!-- FOOTER DE PAGO Y DIRECCIÓN -->
+            <div class="cart-drawer-footer">
+                <div class="cart-totals-summary">
+                    <div class="cart-total-row">
+                        <span>Subtotal Cosechas:</span>
+                        <strong id="cart-subtotal">$0 COP</strong>
+                    </div>
+                    <div class="cart-total-row">
+                        <span>Envío y Transporte en Finca:</span>
+                        <strong style="color: var(--c-verde);">GRATIS</strong>
+                    </div>
+                    <div class="cart-total-row total-highlight">
+                        <span>Total a Pagar:</span>
+                        <strong id="cart-total">$0 COP</strong>
+                    </div>
+                </div>
+
+                <!-- DESTINO DE ENTREGA EN LA CANASTA -->
+                <div class="cart-dest-indicator" id="cart-dest-indicator">
+                    <!-- Se muestra resumen de dirección -->
+                </div>
+
+                <button class="btn-confirmar-pedido" onclick="confirmarPedidoDesdeCanasta()">
+                    <span>🚚</span> Confirmar Pedido con Entrega a Domicilio
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER INSTITUCIONAL LIMPIO -->
+    <footer class="main-footer-clean">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <span class="brand-badge-footer">🌾 AgroCampo • SENA CIMM</span>
+                <p>Plataforma para la Comercialización y Logística de la Canasta Familiar Campesina.</p>
+                <p class="footer-sub">Desarrollado en Java Servlets Web Application sobre Servidor Apache Tomcat • Estándar Formativo CIMM Sogamoso.</p>
+            </div>
+            <div class="footer-links-col">
+                <strong>Roles del Sistema:</strong>
+                <a onclick="abrirModalLogin('comprador')">Panel Comprador</a>
+                <a onclick="abrirModalLogin('vendedor')">Panel Campesino Productor</a>
+                <a onclick="abrirModalLogin('admin')">Panel Administrador Central</a>
+            </div>
+        </div>
+        <div class="footer-bottom-bar">
+            <span>© 2026 AgroCampo • SENA Centro Industrial de Mantenimiento y Manufactura (CIMM) • Todos los derechos reservados.</span>
+        </div>
+    </footer>
+
+    <!-- Script de lógica de la aplicación -->
+    <script src="js/app.js"></script>
+</body>
+</html>
